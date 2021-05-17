@@ -1,4 +1,5 @@
-﻿using Service.Service;
+﻿using EntityModel.Models;
+using Service.Service;
 using Service.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,23 @@ namespace SchoolWeb.Controllers
         {
             List<StudentViewModel> stuVM = await stuSvr.GetAllStudents();
             return View(stuVM);
+        }
+
+        public async Task<ActionResult> EditStudent(int? stuid)
+        {
+            StudentViewModel stuVM = stuid == null ? 
+                                     new StudentViewModel() : 
+                                     await stuSvr.GetStudentById(stuid.Value);
+            return View(stuVM);
+        }
+
+        public async Task<ActionResult> EditAction(StudentViewModel stuVM)
+        {
+            Student student = stuVM.StudentID == 0 ? 
+                              stuSvr.CreateStudent(stuVM) :
+                              stuSvr.UpdateStudent(stuVM);
+
+            return RedirectToAction("Index");
         }
     }
 }

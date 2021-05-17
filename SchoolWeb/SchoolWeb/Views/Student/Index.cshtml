@@ -7,7 +7,7 @@
 <h2>Student</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add a new student", "EditStudent", "Student")
 </p>
 <table class="table">
     <tr>
@@ -29,8 +29,8 @@
             @item.EnrollmentDate
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { @*stuid = item.StudentID*@ }) |
-            @Html.ActionLink("Details", "Index", "Enrollment", new { stuid = item.StudentID },null)
+            @Html.ActionLink("Edit", "EditStudent", "Student", new { stuid = item.StudentID }, null) |
+            @Html.ActionLink("Details", "Index", "Enrollment", new { stuid = item.StudentID }, null)
         </td>
     </tr>
 }
