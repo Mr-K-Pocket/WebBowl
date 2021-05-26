@@ -1,4 +1,4 @@
-﻿@model List<Service.ViewModel.StudentCourseEnrollment>
+﻿@model DapperService.Model.Student
 
 @{
     ViewBag.Title = "Index";
@@ -9,26 +9,26 @@
 
 <table class="table">
     <tr>
-        <th>Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Course</th>
-        <th>Credit</th>
         <th>Grade</th>
     </tr>
 
-    @foreach (var item in Model)
-    {
+    @foreach (var enrollment in Model.Enrollments)
+    { 
         <tr>
             <td>
-                @item.FullName
+                @Model.FirstName
             </td>
             <td>
-                @item.Title
+                @Model.LastName
             </td>
             <td>
-                @item.Credits
+                @enrollment.Title
             </td>
             <td>
-                @item.Grade
+                @enrollment.Grade
             </td>
         </tr>
     }

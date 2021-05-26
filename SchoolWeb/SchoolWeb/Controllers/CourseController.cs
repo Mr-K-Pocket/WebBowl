@@ -1,6 +1,5 @@
-﻿using Service.Service;
-using Service.ViewModel;
-using System.Collections.Generic;
+﻿using DapperService.Service;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -12,8 +11,8 @@ namespace SchoolWeb.Controllers
         // GET: Course
         public async Task<ActionResult> Index()
         {
-            List<CourseViewModel> courseVM = await courseSvr.GetAllCourses();
-            return View(courseVM);
+            var courseVM = await courseSvr.GetAllCourses();
+            return View(courseVM.ToList());
         }
     }
 }

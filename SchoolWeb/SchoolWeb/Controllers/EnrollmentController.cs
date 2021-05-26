@@ -1,6 +1,4 @@
-﻿using Service.Service;
-using Service.ViewModel;
-using System.Collections.Generic;
+﻿using DapperService.Service;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -8,11 +6,11 @@ namespace SchoolWeb.Controllers
 {
     public class EnrollmentController : Controller
     {
-        private StudentCourseEnrollmentService sceSvr = new StudentCourseEnrollmentService();
+        private StudentService sceSvr = new StudentService();
         // GET: Enrollment
         public async Task<ActionResult> Index(int stuid)
         {
-            List<StudentCourseEnrollment> sceVM = await sceSvr.GetStudentEnrollments(stuid);
+            var sceVM = await sceSvr.GetStudentWithEnrollment(stuid);
             return View(sceVM);
         }
     }

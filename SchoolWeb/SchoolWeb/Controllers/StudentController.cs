@@ -1,7 +1,5 @@
-﻿using EntityModel.Models;
-using Service.Service;
-using Service.ViewModel;
-using System.Collections.Generic;
+﻿using DapperService.Model;
+using DapperService.Service;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -14,24 +12,29 @@ namespace SchoolWeb.Controllers
         // GET: Student
         public async Task<ActionResult> Index()
         {
-            List<StudentViewModel> stuVM = await stuSvr.GetAllStudents();
-            return View(stuVM);
+            var stuVM = await stuSvr.GetAllStudents();
+            return View(stuVM.ToList());
         }
 
         public async Task<ActionResult> EditStudent(int? stuid)
         {
-            StudentViewModel stuVM = stuid == null ? 
-                                     new StudentViewModel() : 
-                                     await stuSvr.GetStudentById(stuid.Value);
+            Student stuVM = stuid == null ? 
+                                     new Student() : 
+                                     await stuSvr.GetStudentByID(stuid.Value);
             return View(stuVM);
         }
 
-        public async Task<ActionResult> EditAction(StudentViewModel stuVM)
+        public async Task<ActionResult> EditAction(Student stuVM)
         {
-            Student student = stuVM.StudentID == 0 ? 
-                              stuSvr.CreateStudent(stuVM) :
-                              stuSvr.UpdateStudent(stuVM);
-
+            if (stuVM.StudentID == 0)
+            {
+                await stuSvr.CreateStudent(stuVM);
+            }
+            else
+            {
+                await stuSvr.UpdateStudent(stuVM);
+            }
+            
             return RedirectToAction("Index");
         }
     }
